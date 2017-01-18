@@ -22,7 +22,7 @@
 		echo'<tr><td>'.strtoupper($worker["employee_number"]).'</td><td>'.ucwords($worker["first_name"]). ' '
 		.ucwords($worker["last_name"]).'</td><td>'.$worker["email"].'</td><td>'.$worker["phone"].'</td><td>'.
 		ucwords($worker["employee_type"]).'</td><td>'.ucwords($worker["department_name"]).'</td><td>
-		<a href="../Supervisor/staffdetails?id='.$worker["employee_id"].'">View Profile</a></td>
+		<a href="../Supervisor/staffdetails?id='.$worker["employee_id"].'&&page='.$page_number.'">View Profile</a></td>
 		</tr>';
 	}
 	?>

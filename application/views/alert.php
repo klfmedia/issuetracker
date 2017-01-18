@@ -151,6 +151,22 @@
 		});</script>';
 		}
 		
+	else if($alert=="deleteissues"){
+			echo' <script>	swal({
+			title: "'.$alert_title.'",
+			text: "'.$alert_message.'",
+			showCancelButton: true,
+			confirmButtonText: "Yes, Delete Issues!",
+			cancelButtonText: "No, Cancel plx!",
+			type: "warning",
+			confirmButtonColor: "#DD6B55",
+		}, function(){
+		
+			window.location.href = "../supervisor/deleteOutdatedIssues";
+		});</script>';
+		}
+		
+		
 		
 	?>
 

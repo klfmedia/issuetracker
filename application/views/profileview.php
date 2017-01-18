@@ -94,7 +94,7 @@
 		</form>	
 		<?php 
 		if ($staffinfo["employee_type"]<>"administration" && $staffinfo["employee_type"]<>"boss" ) {
-			echo'<a id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:25px 80px "   href="../supervisor/employees">
+			echo'<a id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:25px 80px "   href="../supervisor/employees?page='.$page_number.'">
 			 Back to previous page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>';
 		}
 		else{

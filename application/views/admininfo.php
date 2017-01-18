@@ -2,10 +2,11 @@
 	<div class="divControls">
         <ul>
           <li>	<a onclick="showSubMenu()" class="dropbtn">Other Actions</a>
-				<div class="dropdown" onmouseleave="hideSubMenu()">
-				<div id="myDropdown" class="dropdown-content" >
-				<a href="../supervisor/inactiveStaff">Inactive Staff</a>
-				<a href="../supervisor/administrators">Administrators</a>
+				<div class="dropdown" onmouseleave="hideSubMenu()" >
+				<div id="myDropdown" class="dropdown-content"  style="text-align:justify;">
+				<a style="float:left" href="../supervisor/inactiveStaff">Inactive Staff</a>
+				<a style="float:left" href="../supervisor/administrators">Administrators</a>
+				<a style="float:left" href="../supervisor/outdatedIssues">Expired Issues</a>
 				</div>
 				</div>
               

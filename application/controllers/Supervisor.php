@@ -216,17 +216,18 @@ class Supervisor extends CI_Controller
 		$this->load->model('Technician');
 		$this->load->model('issue');
 		$new_tech = new Technician();
-		$new_tech->setName($_GET['techname']);
-		$new_tech->setSpeciality($_GET['specialization']);
-		$new_tech->setPhone($_GET['phone']);
+		$new_tech->setName($_POST['techname']);
+		$new_tech->setSpeciality($_POST['specialization']);
+		$new_tech->setPhone($_POST['phone']);
+		$new_tech->setCompany($_POST['company']);
 		$result = $new_tech->addTechnician();
 		$case= new Issue();
-		$case->setIssueId($_GET['issue_id']);
-		$data['issue_id'] = $_GET['issue_id'];
+		$case->setIssueId($_POST['issue_id']);
+		$data['issue_id'] = $_POST['issue_id'];
 		$case->assignCurrentIssue($result["tech_id"]);
 		$this->issueDetails();	
 		$data["alert_title"]="New Tech Assigned!";
-		$data["alert_message"]='New Techician '.ucwords($new_tech->getName()).' has been created and assigned to Issue Iss'.$case->getIssueId();
+		$data["alert_message"]='New Techician '.ucwords($new_tech->getName()).' has been assigned to Issue Iss'.$case->getIssueId();
 		$data["alert"]="success";
 		$this->load->view("alert",$data);
 	}
@@ -338,7 +339,8 @@ class Supervisor extends CI_Controller
 		$boss= new Admin();
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->greetings();
-		$this->adminData();		
+		$this->adminData();	
+		//$data["page_number"]=$_GET["page"];
 		$data=$this->getDisplayData("employees");
 		$this->load->view("employees", $data);	
 	}
@@ -589,6 +591,8 @@ class Supervisor extends CI_Controller
 		if(!isset($_SESSION)) {
 			session_start();
 		}
+		$page_number=$_GET["page"];
+		$data["page_number"]=$page_number;
 		if ($_SESSION["userid"]==$_GET["id"]) {
 			$this->load->model('Employee');
 			$current_user = new Employee();
@@ -725,7 +729,75 @@ class Supervisor extends CI_Controller
 		$this->load->view("allissues", $data);
 	}
 	
+//displays tables of reported issues
+	//prompt to confirm delete of outdated issues
+	public function clearOutdatedIssues()
+	{
+		$data["alert_message"]="Issues will be deleted from all records permanently";
+		$data["alert"]="deleteissues";
+		$data["alert_title"]="Clear Outdated Issues";
+		$this->outdatedIssues();
+		$this->load->view("alert",$data);
+	}
 	
+	//delete inactive Employee after confirmation
+	public function deleteOutdatedIssues()
+	{
+		$this->load->model('Admin');
+		$boss= new Admin();
+		$issue_count = $boss->deleteOutdatedIssues();
+		$data["alert_message"]= $issue_count.' Outdated Issues have been deleted permanently from the system ';
+		$data["alert"]="success";
+		$data["alert_title"]="Outdated Issues Deleted";
+		$this->outdatedIssues();
+		$this->load->view("alert",$data);
+	}
+	
+	public function outdatedIssues()
+	{
+		$pge=1;
+		if (isset($_GET["page"])) {
+			$pge= $_GET["page"];
+		}
+		$str = ($pge*5)-5;
+		$this->load->model('Admin');
+		$boss= new Admin();
+		$this->adminData();
+		$this->load->view("header");
+		$old_issues=$boss->getOutdatedIssues();
+		$nbr=ceil(count($old_issues)/8);
+		$view_issues=$boss->viewOutdatedIssues($str);
+		$data["page_number"] = $pge;
+		$data["nb"]=$nbr;
+		$data["issues"] = $view_issues;
+		$this->load->view("outdatedissues", $data);
+	}
+	
+	//calls header and footer for display as well as the view for outdated issues details 
+	public function outdatedIssueDetails()
+	{
+		$this->load->model('Issue');
+		$this->load->model('Employee');
+		$current_user =new Employee();
+		if(!isset($_SESSION)) {
+			session_start();
+		}
+		$current_user->setEmployeeId($_SESSION['userid']);
+		$current_user->getFullProfile();
+		$current_issue = new Issue();
+		$current_issue->setIssueId($_GET['id']);
+		$issue_details = $current_issue->getIssueDetails();
+		$data['issue_id'] = $_GET['id'];
+		$data['details'] = $issue_details;
+		$data['issueImage'] = $current_issue->getIssueAttachments();
+		$staff = $current_user->getType();
+		$this->adminData();
+		$this->load->model('Admin');
+		$boss= new Admin();
+		$my_techs = $boss->getTechnicians();
+		$techs["all_techs"] =  $my_techs;
+		$this->load->view("outdatedissuesdetails", $data);
+	}
 	
 }
 

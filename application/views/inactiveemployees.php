@@ -25,18 +25,18 @@
 				echo'</table></div><br/>';
 				echo'<ul class="pagination">';
 				if($previous_page!=0) {
-					echo'<li><a href="../supervisor/employees?page='.$previous_page.'">&#x25C4;</a></li>'; 
+					echo'<li><a href="../supervisor/inactivestaff?page='.$previous_page.'">&#x25C4;</a></li>'; 
 				}	 
 				for ($pg =1; $pg<=$nb; $pg++) {
 					if ($page_number==$pg) {
-						echo'<li><a class="active" href="../supervisor/employees?page='.$pg.'">'.$pg.'</a></li>';;
+						echo'<li><a class="active" href="../supervisor/inactivestaff?page='.$pg.'">'.$pg.'</a></li>';;
 					}
 					else{
-						echo'<li><a href="../supervisor/employees?page='.$pg.'">'.$pg.'</a></li>';
+						echo'<li><a href="../supervisor/inactivestaff?page='.$pg.'">'.$pg.'</a></li>';
 					}
 				}
 				if($next_page<=$nb)	{
-					echo'<li><a href="../supervisor/employees?page='.$next_page.'">&#x25BA;</a></li> </ul>'; 
+					echo'<li><a href="../supervisor/inactivestaff?page='.$next_page.'">&#x25BA;</a></li> </ul>'; 
 				}
 			}
 			else {

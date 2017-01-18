@@ -43,7 +43,22 @@
 		</tr>
 
 	</table>
-	<a style="clear:both;position:relative;bottom:-100px; right:10px;float:right; " href="../supervisor/issues?all=<?php echo $all."&&page=".$page_number?>">
-		 Back to previous page<img style="width:25px; height:20px" src="../../assets/images/returnicon.png"/></a>
+	<?php 
+		$filter=$_SESSION["issues"];
+		if ($filter!="all") {
+			echo'<a style="clear:both;position:relative;bottom:-100px; right:10px;float:right;"
+			 href="../supervisor/issues?all=<?php echo $all."&&page=".$page_number?>">
+			 Back to previous page<img style="width:25px; height:20px" src="../../assets/images/returnicon.png"/></a>';
+		}
+		else{
+			echo'<a style="clear:both;position:relative;bottom:-100px; right:10px;float:right;"
+			 href="../staff/issues?all=<?php echo $all."&&page=".$page_number?>">
+			 Back to previous page<img style="width:25px; height:20px" src="../../assets/images/returnicon.png"/></a>';
+		}
+	
+	?>
+	
+		 
+	
 
 </div>

@@ -58,7 +58,7 @@
 	</div> 
 
 	<?php 
-	$all="false";
+	$all="true";
 	if (isset($_GET['all'])) {
 		$all=$_GET['all'];
 	}

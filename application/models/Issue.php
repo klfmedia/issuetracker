@@ -102,40 +102,47 @@ class Issue extends CI_Model{
 // get all  issues that have been reported by their status.
 	public function getIssuesByStatus()
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name 
 									FROM issues, issue_log, attachments,employees where	issues.issue_id = issue_log.issue_id AND 
-									issues.issue_id = attachments.issue_id AND issues.employee_id = employees.employee_id AND status = "'.$this->status.'"');
+									issues.issue_id = attachments.issue_id AND issues.employee_id = employees.employee_id 
+									AND status = "'.$this->status.'" AND date_reported >="'. $cutoff_date.'"');
 		return $query->result_array();
 	}
 	
 // get all  issues that have been reported by their status.
 	public function viewIssuesByStatus($ref)
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name 
 				FROM issues, issue_log, attachments, employees where issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id
-				AND issues.employee_id = employees.employee_id	AND status = "'.$this->status.'" limit '.$ref.', 8');
+				AND issues.employee_id = employees.employee_id	AND status = "'.$this->status.'"AND date_reported >="'. $cutoff_date.'" limit '.$ref.', 8');
 		return $query->result_array();
 	}
 	
 // get open  issues (pending issues and assigned issues)
 	public function getOpenIssues()
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name
 									FROM issues, issue_log, attachments, employees where issues.issue_id = issue_log.issue_id AND 
-									issues.issue_id = attachments.issue_id 	AND issues.employee_id = employees.employee_id AND (status = "pending" OR status="in progress")');
+									issues.issue_id = attachments.issue_id 	AND issues.employee_id = employees.employee_id 
+									AND date_reported >="'. $cutoff_date.'"AND (status = "pending" OR status="in progress")');
 		return $query->result_array();
 	}
 	
 // view max 8 issues per page
 	public function viewOpenIssues($ref)
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name
 									FROM issues, issue_log, attachments, employees where issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id 
-									AND issues.employee_id = employees.employee_id	AND (status = "pending" OR status="in progress") limit '.$ref.', 8');
+									AND issues.employee_id = employees.employee_id	AND date_reported >="'. $cutoff_date.'"
+									AND (status = "pending" OR status="in progress") limit '.$ref.', 8');
 		return $query->result_array();
 	}
 	
@@ -143,20 +150,24 @@ class Issue extends CI_Model{
 // get closed  issues (resolved issues and rejected issues)
 	public function getClosedIssues()
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name
 									FROM issues, issue_log, attachments, employees where issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id 
-									AND issues.employee_id = employees.employee_id	AND (status = "rejected" OR status="resolved")');
+									AND issues.employee_id = employees.employee_id
+									AND date_reported >="'. $cutoff_date.'"AND (status = "rejected" OR status="resolved")');
 		return $query->result_array();
 	}
 	
 // view max 8 issues per page
 	public function viewClosedIssues($ref)
 	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
 		$this->load->database();
 		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name
 							FROM issues, issue_log, attachments, employees where issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id
-							AND issues.employee_id = employees.employee_id	AND (status = "rejected" OR status="resolved") limit '.$ref.', 8');
+							AND issues.employee_id = employees.employee_id	AND date_reported >="'. $cutoff_date.'"
+							AND (status = "rejected" OR status="resolved") limit '.$ref.', 8');
 		return $query->result_array();
 	}
 	

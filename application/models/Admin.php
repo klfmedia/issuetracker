@@ -90,5 +90,36 @@ class Admin extends Employee{
 	
 	}
 	
+// get all issues that have been older than 3 months.
+	public function getOutdatedIssues()
+	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
+		$this->load->database();
+		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name FROM issues, issue_log, attachments,employees where
+						issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id AND employees.employee_id=issues.employee_id
+						AND date_reported <"'. $cutoff_date.'"');
+		return $query->result_array();
+	}
+	
+// get all issues that have been older than 3 months in batches of 8.
+	public function viewOutdatedIssues($ref)
+	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
+		$this->load->database();
+		$query = $this->db->query('SELECT issues.*, date_reported, attachment_name, first_name, last_name FROM issues, issue_log, attachments,employees where
+						issues.issue_id = issue_log.issue_id AND issues.issue_id = attachments.issue_id AND employees.employee_id=issues.employee_id
+						AND date_reported <"'. $cutoff_date.'" limit '.$ref.', 8');
+		return $query->result_array();
+	}
+//function to clear outdated issues Delete issues older than 3 months
+	public function deleteOutdatedIssues()
+	{
+		$cutoff_date = date("Y-m-d",strtotime('-3 months'));
+		$this->load->database();
+		$info = $this->db->query('DELETE FROM issues WHERE issue_id IN
+				( SELECT issue_id FROM issue_log where date_reported < "'.$cutoff_date.'")');
+		return $info;
+	}
+	
 
 }

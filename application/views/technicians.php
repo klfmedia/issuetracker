@@ -117,7 +117,7 @@
 	<a href="../supervisor/technicians?page=<?php echo $page_number?>" >
 	<input class= "cancelButton" type="button" value="Cancel" onclick="cancelTechCreation()"/></a>
 	<input class= "myButton"  type="submit" value="Submit"/>
-	<p>
+	</p>
 	</form>
 	</div>
 

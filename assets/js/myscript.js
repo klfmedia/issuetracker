@@ -239,14 +239,21 @@
 
 	function techAssignment()
 	{
-		document.getElementById("selectTech").style.display = "block";
-		document.getElementById("cancelTech").style.display = "inline";
-		document.getElementById("assignTech").style.display = "inline";
-		document.getElementById("btnAssignTech").style.display = "none";
-		document.getElementById("btnResolve").style.display = "none";
-		document.getElementById("btnReject").style.display = "none";
-		document.getElementById("btnBackToIssues").style.display = "none";
-		chosenTech();
+		var status = document.getElementById("issuestatus").value;
+		
+		if(status=="rejected" || status=="resolved"){
+			swal( status+" Issue", "This issue has already been "+status, "error"); 
+		}
+		else{
+			document.getElementById("selectTech").style.display = "block";
+			document.getElementById("cancelTech").style.display = "inline";
+			document.getElementById("assignTech").style.display = "inline";
+			document.getElementById("btnAssignTech").style.display = "none";
+			document.getElementById("btnResolve").style.display = "none";
+			document.getElementById("btnReject").style.display = "none";
+			document.getElementById("btnBackToIssues").style.display = "none";
+			chosenTech();
+		}
 	}
 
 // toggles between adding new tech and assinging to existing tech
@@ -273,6 +280,11 @@
 		document.getElementById("btnResolve").style.display = "inline";
 		document.getElementById("btnReject").style.display = "inline";
 		document.getElementById("btnBackToIssues").style.display = "inline";
+	}
+	function cancelnewTechAssignment(){
+		document.getElementById("addNewTech").style.display = "none";
+		document.getElementById("assignTech").style.display = "inline";	
+		document.getElementById("techassigned").value="";
 	}
 	  
 
@@ -369,6 +381,12 @@
 	function viewProfilePopUp() 
 	{
 		var popup = document.getElementById('viewProfile');
+		popup.classList.toggle('show');
+	}
+	
+	function deleteIssuesPopUp() 
+	{
+		var popup = document.getElementById('issuesBin');
 		popup.classList.toggle('show');
 	}
 
