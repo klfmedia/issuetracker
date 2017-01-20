@@ -16,6 +16,7 @@
 	 <script src="../../assets/js/sweetalert.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../assets/css/sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="../../assets/css/alertstyles.css">
+	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript">
 

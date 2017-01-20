@@ -1,15 +1,21 @@
 
 
-	<a id="btnadduser" href= "../supervisor/newemployee" class="popup" onmouseenter="addEmployeePopUp()" onmouseleave="addEmployeePopUp()"
-	style="width:40px; height:40px;float:left;margin:25px 150px;">
-	<img  src="../../assets/images/addusericon.png" />
-	<span class="popuptext" id="addNewEmployee">Add Employee</span>
-	</a>
+<!-- 	<a id="btnaduser" href= "../supervisor/newemployee" class="popup" onmouseenter="addEmployeePopUp()" onmouseleave="addEmployeePopUp()"
+	style="width:40px; height:40px;float:left;margin:25px 150px;"> -->
+<!-- 	<img  src="../../assets/images/addusericon.png" /> -->
+<!-- 	<span class="popuptext" id="addNewEmployee">Add Employee</span> -->
+<!-- 	</a> -->
 
-
-	<div class="container" id="myEmployees" style="display:block; text-align:center">
-	<div style="min-height:200px" >
-	<table class="issuesTable" style="margin-top:5px;">
+<h2 style="float:left;margin-left:150px; margin-top:70px">Employees</h2>	
+<a id="btnadduser" href= "../supervisor/newemployee" class="popup" onmouseenter="addEmployeePopUp()" onmouseleave="addEmployeePopUp()"
+	style="width:60px; height:60px;float:right;margin:45px 1px; margin-right:150px;">
+	<img src="../../assets/images/addtechicon.png" />
+	 <span class="popuptext" id="addNewEmployee">Add Employee</span>
+</a>
+<h4 style="float:right;margin-top:80px">Add Employee </h4>
+	<div class="container" id="myEmployees" style="display:block; text-align:center;">
+	<div style="min-height:200px" ><br/>
+	<table class="issuesTable" style="margin:1px auto;">
 	<tr>
 	<th>Employee Number</th><th>Name</th><th>Email</th><th>Phone</th><th>Employee Type</th><th>Department</th><th>Action</th>
 	</tr>
@@ -45,6 +51,7 @@
 	}
 	?>
 	<br/>
+	
 	<a  id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:15px "  href="../staff/home">
 		 Back to previous page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>
 

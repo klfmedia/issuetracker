@@ -1,6 +1,7 @@
 
 
 	<div class="container" id="myEmployees" style="display:block; text-align:center">
+	<h2 style="float:left;margin:20px 25px; margin-top:1px">Administrators</h2>
 	<div style="min-height:200px" >
 	<table class="issuesTable" style="margin-top:5px;">
 	<tr>
@@ -42,6 +43,6 @@
 	?>
 		<br/>
 
-	<a  id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:15px "  href="../staff/home">
+	<a  id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:15px 25px"  href="../staff/home">
 		 Back to previous page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>
 	</div>

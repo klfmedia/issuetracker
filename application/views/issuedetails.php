@@ -1,6 +1,7 @@
 <div class="container" style="padding:1px 10px;width:95%;margin-bottom:0px;">
 	
-	<h1 style="float:left;">Issue Name: <span><?php echo ucwords($details["issue_name"]);?> </span></h1>
+	<h2 style="float:left;position:relative; top:-30px;">Issue Details</h2>
+	<h3 style="clear:both;float:left;margin:0">Issue Name: <span><?php echo ucwords($details["issue_name"]);?> </span></h3>
 	<span style="float:right;margin-right:20px"> Ref #00<?php echo $issue_id ?> </span>
 	<table style="clear:both;margin-top:80px ;width:100%">
 		<tr>
@@ -47,12 +48,12 @@
 		$filter=$_SESSION["issues"];
 		if ($filter!="all") {
 			echo'<a style="clear:both;position:relative;bottom:-100px; right:10px;float:right;"
-			 href="../supervisor/issues?all=<?php echo $all."&&page=".$page_number?>">
+			 href="../supervisor/issues?all='. $all.'&&page='.$page_number.'">
 			 Back to previous page<img style="width:25px; height:20px" src="../../assets/images/returnicon.png"/></a>';
 		}
 		else{
 			echo'<a style="clear:both;position:relative;bottom:-100px; right:10px;float:right;"
-			 href="../staff/issues?all=<?php echo $all."&&page=".$page_number?>">
+			 href="../staff/issues?all='.$all.'"&&page='.$page_number.'">
 			 Back to previous page<img style="width:25px; height:20px" src="../../assets/images/returnicon.png"/></a>';
 		}
 	

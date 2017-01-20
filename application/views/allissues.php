@@ -32,6 +32,7 @@
 	}
 	?>
 
+	<h2 style="float:left;margin-left:30px; margin-bottom:20px">Issues</h2>
 
 	<div class="issueControls" >
 		<ul style="float:left;">
@@ -71,7 +72,7 @@
 	if (count($issues)>0) {
 		echo'<div id="pictureView" style="display:'.$icon_display.'; font-family:Times New Roman, Times, serif;">';
 		foreach ($issues as $item) {
-			echo'<div style="float:left; height:250px;width:230px; border:0; margin:5px 33px; text-align:center;">
+			echo'<div style="float:left; height:250px;width:230px; border:0; margin:1px 33px; margin-top:35px;  text-align:center;">
 				<a href="../staff/issuedetails?id='.$item["issue_id"].'&&all='.$all.'&&page='.$page_number.'">	
 				<div style="border:1px solid #C8C8C8;text-align:center;height:210px;position:relative;border-radius:5px">
 				<img id="test" style="position:absolute; top:0; left:0;" src="../../assets/images/'.$item["attachment_name"] .'" />
@@ -84,7 +85,7 @@
 				</div>';
 		}
 		echo'</div>';
-		echo '<table id="listView" class="issuesTable" style="margin-top:5px;display:'.$list_display.'"><tr>';
+		echo '<table id="listView" class="issuesTable" style="margin-top:70px;display:'.$list_display.'"><tr>';
 		echo'<th>Issue Name</th><th>Location</th><th>Date Reported</th><th>Status</th><th>Priority</th><th>Description</th><th>Action</th></tr>';
 
 //<!-- //Loops and attaches all issues to table displayed to employee at sign in -->
@@ -153,7 +154,7 @@
 	?>
 		<br/><br/>
 
-	<a style="vertical-align:bottom;clear:both;float:right;margin:15px "  href="../staff/home">
+	<a style="vertical-align:bottom;clear:both;float:right;margin:15px 40px"  href="../staff/home">
 		 Back to issues page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>
 	</div>
 

@@ -1,7 +1,8 @@
 <div class="container" style="padding:1px 10px;width:95%;margin-bottom:0px;">
 	
-	<h1 style="float:left;">Issue Name:<span><?php echo ucwords($details["issue_name"]);?> </span></h1>
-	<span style="float:right;"> Ref #00<?php echo $issue_id ?> </span>
+	<h2 style="float:left;position:relative; top:-30px;">Outdated Issue Details</h2>
+	<h3 style="clear:both;float:left;margin:0">Issue Name: <span><?php echo ucwords($details["issue_name"]);?> </span></h3>
+	<span style="float:right;margin-right:20px"> Ref #00<?php echo $issue_id ?> </span>
 	<table style="clear:both;margin-top:90px ;width:100%">
 		<tr>
 		 <td rowspan="5" style="padding:0;width:325px;"> 

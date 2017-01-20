@@ -4,8 +4,14 @@
 <head>
 	<title>www.issuetracker.com</title>
 	 <link rel="stylesheet" href="../../assets/css/styles.css">
-	 	 <link rel="stylesheet" href="./../assets/css/styles.css">
 	 <script src="../../assets/js/myscript.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	   <!-- SweetAlert includes-->
+	 <script src="../../assets/js/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../assets/css/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="../../assets/css/alertstyles.css">
+
+	
 </head>
  <body  style="background-color:white">
 		 <div class="subMenu" id="menu">
@@ -33,11 +39,11 @@
 			<div style="border:0; border-bottom:1px solid gray; width:350px; margin:30px auto;padding-bottom:3px;text-align:justify;">
 				<input style="border:0; width:250px" type="text" name="password"  placeholder="password" required oninvalid="this.setCustomValidity('Password is required')"
 				oninput="setCustomValidity('')">
-				 <h6 style="float:right">Forgot?</h6>
+				 <a onclick="forgotPassword()" style="float:right" >Forgot? </a>
 			</div>
 		   
 			 <div style="border:0; width:350px; margin:30px auto;padding-bottom:3px;text-align:justify;">
-				<h6>Stay logged in?</h6>
+				<!-- <h6>Stay logged in?</h6> -->
 			 </div><br/><br/>
 		 
 		 

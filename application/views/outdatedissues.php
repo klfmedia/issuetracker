@@ -1,3 +1,7 @@
+
+
+
+
 	<div class="container" id="issueTable" style="text-align:center; padding:10px; width:95%; margin-top:0px; min-height:650px">
 
 	<?php 
@@ -17,10 +21,10 @@
 	
 	if (count($issues)>0) {
 		echo'<a href="../supervisor/clearOutdatedIssues" id="emptyTrash" class="popup" 
-		 style="margin:2px auto" onmouseenter="deleteIssuesPopUp()" onmouseleave="deleteIssuesPopUp()"> 
-				  <img  style="float:left; width:50px; height:90%"alt="" src="../../assets/images/trashicon.jpg"/>
+		 style="margin:2px auto; clear:both;" onmouseenter="deleteIssuesPopUp()" onmouseleave="deleteIssuesPopUp()"> 
+				  <img  style=" width:50px; height:90%"alt="" src="../../assets/images/trashicon.jpg"/>
 				 <span class="popuptext" id="issuesBin">Delete All Issues</span></a>';
-				  
+		echo'<h2 style="position:absolute; float:left;margin-left:30px;top:140px">Outdated Issues</h2>';
 
 		echo'<div class="issueControls" >
 			<ul style="float:left;">
@@ -102,7 +106,7 @@
 	?>
 		<br/><br/>
 
-	<a style="vertical-align:bottom;clear:both;float:right;margin:15px "  href="../staff/home">
+	<a style="vertical-align:bottom;clear:both;float:right;margin:15px 40px"  href="../staff/home">
 		 Back to previous page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>
 	</div>
 

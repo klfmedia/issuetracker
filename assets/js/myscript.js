@@ -1,4 +1,10 @@
 
+//================ used by login.php view ========================//
+	function forgotPassword()
+	{
+		swal("Forgot Password?", "Send an email to sandro@klfmedia.com", "info"); 
+	}
+
 //================ used by issues.php view ========================//
 //toggles between showing or hiding issues on user's page
 	function viewIssues()
@@ -79,39 +85,45 @@
 
 //prepares form to edit administrative information of employee
 	function editSecureInfo(){
-		var x = document.getElementsByClassName("secureInfo");
-		var y = document.getElementsByClassName("displayInfo");
+		document.getElementById("adminSuspend").style.display = "none";
+		var x = document.getElementsByClassName("editField");
+		//var y = document.getElementsByClassName("displayInfo");
 		
 		for (var i = 0; i < x.length; i++) {
 			x[i].style.display = "block";
 		}		
-		for (var i = 0; i < y.length; i++) {
-			y[i].style.display = "none";
-		}
+		//for (var i = 0; i < y.length; i++) {
+		//	y[i].style.display = "none";
+		//}
 		document.getElementById("adminCancel").style.display = "inline";
 		document.getElementById("adminSubmit").style.display = "inline";
 		document.getElementById("adminEdit").style.display = "none";
 		document.getElementById("btnBackToEmployees").style.display = "none";
 		document.getElementById("setAdmin").style.display = "none";
-		document.getElementById("adminSuspend").style.display = "none";
+		
 	}
 
 //returns back to basic profile display and hides edit of administrative information
 	function cancelSecureEdit(){
-		var x = document.getElementsByClassName("secureInfo");
+		document.getElementById("adminSuspend").style.display = "inline";	
+		var x = document.getElementsByClassName("editField");
 		var y = document.getElementsByClassName("displayInfo");
+		var z = document.getElementsByClassName("secureInfo");
 		for (var i = 0; i < x.length; i++) {
 			x[i].style.display = "none";
 		}		
 		for (var i = 0; i < y.length; i++) {
 			y[i].style.display = "block";
 		}	
+		for (var i = 0; i < z.length; i++) {
+			z[i].style.display = "none";
+		}
 		document.getElementById("adminSubmit").style.display = "none";
 		document.getElementById("adminEdit").style.display = "inline";
 		document.getElementById("adminCancel").style.display = "none";
 		document.getElementById("btnBackToEmployees").style.display = "inline";
 		document.getElementById("setAdmin").style.display = "inline";
-		document.getElementById("adminSuspend").style.display = "inline";	
+		
 	}
 
 
@@ -146,13 +158,18 @@
 
 //prepares form to edit basic information of employee
 	function editBasicInfo(){
-		var x = document.getElementsByClassName("basicInfo");
-		var y = document.getElementsByClassName("myInfo");
-		for (var i = 0; i < x.length; i++) {
+	//	var x = document.getElementsByClassName("basicInfo");
+	//	var y = document.getElementsByClassName("myInfo");
+		var z = document.getElementsByClassName("editField");
+	/*	for (var i = 0; i < x.length; i++) {
 			x[i].style.display = "block";
-		}		
+		}	
 		for (var i = 0; i < y.length; i++) {
 			y[i].style.display = "none";
+		}
+		*/	
+		for (var i = 0; i < z.length; i++) {
+			z[i].style.display = "inline";
 		}
 		document.getElementById("btncancel").style.display = "inline";
 		document.getElementById("btnsubmit").style.display = "inline";
@@ -165,12 +182,16 @@
 	function cancelEditProfile(){
 		var x = document.getElementsByClassName("basicInfo");
 		var y = document.getElementsByClassName("myInfo");
-			for (var i = 0; i < x.length; i++) {
+		var z = document.getElementsByClassName("editField");
+		for (var i = 0; i < x.length; i++) {
 			x[i].style.display = "none";
 		}		
 		for (var i = 0; i < y.length; i++) {
 			y[i].style.display = "block";
-		}	
+		}
+		for (var i = 0; i < z.length; i++) {
+			z[i].style.display = "none";
+		}
 		document.getElementById("btnsubmit").style.display = "none";
 		document.getElementById("btnedit").style.display = "inline";
 		document.getElementById("btncancel").style.display = "none";
@@ -228,12 +249,63 @@
 	$(function ()
 	{
 	  $("#closeButton").click(function () {
-	    $("#pictureUpload").css("display", "block");
+	    $("#pictureUpload").css("display", "block");  
 	  });
 	});
+//functions to toggle betwwen fields to edit
+	function editFNameField()
+	{
+		document.getElementById("inputFName").style.display = "block";
+		document.getElementById("inputFName").focus();
+		document.getElementById("myInfoFName").style.display = "none";
+	}
+	
+	function editLNameField()
+	{
+		document.getElementById("inputLName").style.display = "block";
+		document.getElementById("inputLName").focus();
+		document.getElementById("myInfoLName").style.display = "none";
+	}
+	function editEmailField()
+	{
+		document.getElementById("inputEmail").style.display = "block";
+		document.getElementById("inputEmail").focus();
+		document.getElementById("myInfoEmail").style.display = "none";
+	}
+	
+	function editDeptField()
+	{
+		document.getElementById("inputDept").style.display = "block";
+		document.getElementById("inputDept").focus();
+		document.getElementById("myInfoDept").style.display = "none";
+	}
+	function editPhoneField()
+	{
+		document.getElementById("inputPhone").style.display = "block";
+		document.getElementById("inputPhone").focus();
+		document.getElementById("myInfoPhone").style.display = "none";
+	}
+	
+	function editEmpNbrField()
+	{
+		document.getElementById("inputEmpNbr").style.display = "inline";
+		document.getElementById("inputEmpNbr").focus();
+		document.getElementById("myInfoEmpNbr").style.display = "none";
+	}
 
+	function editEmpTypeField()
+	{
+		document.getElementById("inputEmpType").style.display = "inline";
+		document.getElementById("inputEmpType").focus();
+		document.getElementById("myInfoEmpType").style.display = "none";
+	}
 
-
+	function editPassField()
+	{
+		document.getElementById("inputPass").style.display = "inline";
+		document.getElementById("inputPass").focus();
+		document.getElementById("myInfoPass").style.display = "none";
+	}
 //================ used by issuedetailsadmin.php view ========================//
 //Toggle between views for assigning tech by administration 
 

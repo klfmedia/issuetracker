@@ -14,7 +14,7 @@ a {
 
 
 h3 {
-	font-family: 'Roboto Slab', serif;
+/* 	font-family: 'Roboto Slab', serif; */
 	font-weight: 900;
 
 }
@@ -134,7 +134,7 @@ a.subNavBtn {
 .bodywrap{
 
 		padding-top:120px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Dosis', Dosis, sans-serif;
 }
  
 .footer{
@@ -177,7 +177,7 @@ a.subNavBtn {
 
  th {
  	font-weight:bold;
- 	color:#F53939;
+ 	color:white;
  	text-decoration:underline;
     padding: 5px;
     text-align: center;
@@ -201,7 +201,7 @@ table span{
 }
 
 table, th, td {
-  /*  border: 1px solid black;  */
+  /*   border: 1px solid black;  */ 
     min-width:50px;
 }
 
@@ -241,9 +241,18 @@ table, th, td {
     padding: 0.2em 0.6em;
   	color:gray;
 }
-
+.divControls a:hover {
+ 	background-color: gray;  
+	color: white;
+	
+	}
+.issuesTable a:hover {
+ 	background-color: gray;  
+	color: white;
+	}
+	
 table a:hover {
-	background-color: gray;
+ 	/* background-color: gray;  */
 	color: white;
 	
 	}
@@ -274,9 +283,10 @@ padding:0px 20px;
 
 .issueControls{
 	padding:0;
-	margin:10px;
+	margin:10px auto;
 	margin-bottom:30px;
 	height :30px;
+	width:95%;
 	
 }
 
@@ -321,34 +331,6 @@ padding:0px 20px;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .photo{
 	margin-top:20px;
 	float:right;
@@ -380,7 +362,7 @@ padding:0px 20px;
 
 .profile_photo{
 	margin:5px auto;
-	border:3px ridge black;
+	border:1px solid #D0D0D0;
 	height:200px;
 	width:180px;
 	clear:both;
@@ -389,7 +371,7 @@ padding:0px 20px;
 
 #newpassword{
 	
-	border:4px solid blue;
+	
 	width:40%;
 	margin:5px auto;
 	text-align:center;
@@ -398,11 +380,9 @@ padding:0px 20px;
 }
 .issueAttachments{
 	margin:2px;
-	border:3px ridge black;
+	border:1px ridge #D0D0D0;
 	height:280px;
 	width:350px;
-	
-	
 }
 
 
@@ -434,16 +414,12 @@ padding:0px 20px;
 	margin:0px auto;
 }
 
-
-
 #addNewTech{
 	/* width:50%;
 	background-color:black;
 	position:absolute;
 	bottom:150px; */
-	display:none;
-	
-	
+	display:none;	
 }
 
 .popUpDiv{
@@ -451,15 +427,9 @@ padding:0px 20px;
 	width:100%;
 	height:100%;
 	top:0;
-	right:0px;
-background-color: rgba(104,104,104,0.7);
-z-index:20000;
-
-
-	
-	
-	
-	
+	right:0;
+	background-color: rgba(104,104,104,0.7);
+	z-index:20000;
 }
 
 #singlePictureDisplay, {
@@ -541,6 +511,9 @@ z-index:20000;
 	position:relative;
 	bottom:-50px;
 	
+}
+#techJobs td{
+	padding-left:20px;
 }
 .issuesTable{
 	width:95%;
@@ -632,8 +605,7 @@ ul.pagination li a:hover:not(.active) {
 	background-color:white;
 	padding-left:10px;
 	margin-left:40px;
-	 -webkit-appearance: none;       
-     -moz-appearance: none; 	
+	
 } 
  #newIssueTable select{
 	width:360px;
@@ -643,8 +615,8 @@ ul.pagination li a:hover:not(.active) {
 	background-color:white;
 	padding-left:10px;
 	margin-left:40px;
-	 -webkit-appearance: none;       
-     -moz-appearance: none; 
+	/*  -webkit-appearance: none;       
+     -moz-appearance: none;  */
 		
 } 
  .popUpTable{
@@ -668,29 +640,28 @@ ul.pagination li a:hover:not(.active) {
 .profileTable input{
 	
 	width:300px;
-	margin-right:50px;
+	margin-right:1px;
 	height:30px;
 	border:0;
 	background-color:#F0F0F0 ;
 	margin-left:10px;
 	padding-left:10px;
-	 -webkit-appearance: none;       
-     -moz-appearance: none; 
+	float:left;
      
 }
 
 .profileTable select{
 	
 	width:310px;
-	margin-right:50px;
+	margin-right:1px;
 	height:30px;
 	border:0;
 	background-color:#F0F0F0 ;
 	margin-left:10px;
 	padding-left:10px;
-	 -webkit-appearance: none;       
-     -moz-appearance: none; 
-     
+	float:left;
+
+        
 }
 
 #newEmployeeTable input, #newEmployeeTable select{
@@ -711,6 +682,26 @@ ul.pagination li a:hover:not(.active) {
 	margin-left:10px;
 	padding-left:10px;
 }
+
+/********************* edit fields css*********************************/
+
+
+.editField{
+	float:left; 
+	margin-top:1px;
+	background-color:white;
+	padding:0;
+	vertical-align:center;
+	opacity:0.5;
+		width:30px;
+	height:30px;
+	display:none;
+}	
+
+a .editfield:hover{
+		background:red;
+	}
+
 /********************* issues page header*********************************/
 
 .issueHeader{

@@ -12,8 +12,8 @@
 	<form action="../Supervisor/assignissue" method = "get">
 	<p id= "selectTech" style="display:none" onchange="chosenTech()">
 		<select  required id="techassigned" name="techassigned" 
-		style="width:200px; height:50px; background-color:#D8D8D8 ;border:0; -webkit-appearance: none;       
-     -moz-appearance: none; border-radius:5px; padding-left:10px;" >
+		style="width:200px; height:50px; background-color:#D8D8D8 ;border:0;      
+   		 border-radius:5px; padding-left:10px;" >
 			 <option value = "">Select a Technician!</option>
 			<?php
 			
@@ -43,7 +43,9 @@
 				</tr><tr>
 				<td>Company : </td><td><input   class="techInput" type="text" name="company"  placeholder="e.g. Videotron" required/></td>
 				</tr><tr>
-				<td>Phone Number : </td><td><input type="text" name="phone"  placeholder="e.g. 514-111-2222" required/></td>
+				<td>Phone Number : </td><td><input type="text" name="phone"  placeholder="e.g. 514-111-2222" required
+				pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$" title=" (555)-555-5555, 
+				555-555-5555 or +1-555-532-3455"/></td>
 				</tr>
 			</table><br/><br/>
 			 <input type="hidden" name="issue_id" value="<?php echo $details['issue_id'];?>" />

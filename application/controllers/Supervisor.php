@@ -186,10 +186,24 @@ class Supervisor extends CI_Controller
 // displays prompt to confirm deleting technician
 	public function deleteTech()
 	{
-		$data["alert_message"]="Technician will be deleted from all records";
-		$data["alert"]="delete_tech";
-		$data["alert_title"]="Delete Technician";
-		$data["id"]=$_GET["techid"];
+		$this->load->model("Technician");
+		$current_tech = new Technician();
+		$tech_id = $_GET["techid"];
+		$current_tech->setTechId($tech_id);
+		$jobs=$current_tech->getTechnicianJobs();
+		$data["id"]=$tech_id;
+		
+		if (count($jobs)>0) {
+			$data["alert_message"]="Technicians assigned to tasks cannot be deleted! ";
+			$data["alert"]="failure";
+			$data["alert_title"]="Assigned Technician";
+		}
+		else{
+			$data["alert_message"]="Technician will be deleted from all records";
+			$data["alert"]="delete_tech";
+			$data["alert_title"]="Delete Technician";
+		}
+		
 		$this->technicians();
 		$this->load->view("alert",$data);
 	}
@@ -281,11 +295,58 @@ class Supervisor extends CI_Controller
 		$tech_id = $_GET["techid"];
 		$data["modify_id"] = $tech_id;
 		$data["page_number"] = $pge;
-		$all_techs = $this->Admin->getTechnicians();
+		//$all_techs = $this->Admin->getTechnicians();
 		$nbr=ceil(count($view_techs)/5);
 		$data["nb"] = $nbr;
 		$this->adminData();
 		$this->load->view("technicians", $data);	
+	}
+	
+	//Modify technician details
+	public function techJobs()
+	{
+		$pge=1;
+		if (isset($_GET["page"])) {
+			$pge= $_GET["page"];
+		}
+		$str = ($pge*5)-5;
+		$this->load->model("Admin");
+		$this->load->model("Technician");
+		$current_tech = new Technician();
+	
+		
+		$view_techs = $this->Admin->getTechnicians();
+		$techs = $this->Admin->viewTechnicians($str);
+		$data["all_techs"] = $techs;
+		$tech_id = $_GET["techid"];
+		$current_tech->setTechId($tech_id);
+		$jobs = $current_tech->getTechnicianJobs();
+		$nbr=ceil(count($view_techs)/5);
+		$data["nb"] = $nbr;
+		$this->adminData();
+		$tech_name = $current_tech->getTechnicianName($tech_id);
+		$data["tech_name"] = $tech_name;
+		$data["page_number"] = $pge;
+		
+		if (count($jobs)>0) {
+			$data["tech_jobs"] = $jobs;
+			$data["tech_tasks"] = "true";
+			$this->load->view("technicians", $data);
+		}
+		else{
+			$data["alert_message"]='Technician '.ucwords($tech_name) .' currently has no tasks! ';
+			$data["alert"]="info";
+			$data["alert_title"]="UnAssigned Technician";
+			$this->load->view("technicians", $data);
+			$this->load->view("alert",$data);
+		}
+		
+		
+		//$all_techs = $this->Admin->getTechnicians();
+		
+		
+	
+		
 	}
 	
 //loads profile data for current administration	
@@ -330,6 +391,7 @@ class Supervisor extends CI_Controller
 		$data=$this->globalmethods->greetings();
 		$this->adminData();
 		$data=$this->getDisplayData("technicians");
+		$data["tech_tasks"]="hide";
 		$this->load->view("technicians", $data);
 	}
 	
@@ -591,7 +653,13 @@ class Supervisor extends CI_Controller
 		if(!isset($_SESSION)) {
 			session_start();
 		}
-		$page_number=$_GET["page"];
+		if(isset($_GET["page"])) {
+			$page_number=$_GET["page"];
+		}
+		else{
+			$page_number=1;
+		}
+		
 		$data["page_number"]=$page_number;
 		if ($_SESSION["userid"]==$_GET["id"]) {
 			$this->load->model('Employee');
@@ -642,6 +710,7 @@ class Supervisor extends CI_Controller
 		$staff->updateEmployee();
 		$my_dept=  $staff->getDepartment();
 		$staff_info = $staff->getRowProfile();
+		$data["page_number"]=$this->input->post('page');
 		$data["department"] = $my_dept["department_name"];
 		$data["staffinfo"] = $staff_info;
 		$data["departments"]=$staff->getAllDepartments();

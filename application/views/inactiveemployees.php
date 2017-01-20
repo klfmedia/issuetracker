@@ -5,6 +5,7 @@
 		<?php
 			
 			if (count($employee)>0) {	
+				echo'<h2 style="float:left;margin:20px 25px; margin-top:1px">Inactive Employees</h2>';
 				
 				echo'<div style="min-height:200px" >';
 				echo'<table class="issuesTable" style="margin-top:5px;">
@@ -18,8 +19,8 @@
 					echo'<tr><td>'.strtoupper($worker["employee_number"]).'</td><td>'.ucwords($worker["first_name"]). ' '
 					.ucwords($worker["last_name"]).'</td><td>'.$worker["email"].'</td><td>'.$worker["phone"].'</td><td>'.
 						ucwords($worker["employee_type"]).'</td><td>'.ucwords($worker["department_name"]).'</td><td>
-						<a href="../Supervisor/deleteStaff?id='.$worker["employee_id"].'">Delete</a>
-							<a href="../Supervisor/activeStaff?id='.$worker["employee_id"].'">Activate</a></td>
+						<a href="../Supervisor/deleteStaff?id='.$worker["employee_id"].'">&nbsp; Delete &nbsp;|</a>
+							<a href="../Supervisor/activeStaff?id='.$worker["employee_id"].'">|&nbsp; Activate &nbsp;  </a></td>
 						</tr>';
 					}
 				echo'</table></div><br/>';
@@ -47,7 +48,7 @@
 		?>
 		
 		<br/>
-		<a  id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:15px "  href="../staff/home">
+		<a  id="btnBackToEmployees" style="vertical-align:bottom;clear:both;float:right;margin:15px 30px "  href="../staff/home">
 			 Back to previous page<img style="width:25px; height:15px" src="../../assets/images/returnicon.png"/></a>
 
 	</div>

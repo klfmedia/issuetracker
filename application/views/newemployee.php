@@ -1,6 +1,6 @@
-	<div class="container" style="margin-top:5px">
+	<div class="container" style="margin-top:5px; text-align:left;">
 
-		<h2>ADD NEW EMPLOYEE</h2><br/><br/>
+		<h2  style="margin-left:25px">Add New Employee</h2><br/><br/>
 		<!-- //Loops and attaches all issues to table displayed to employee at sign in -->
 		<form action="../supervisor/saveemployee" method="post">
 		<table id="newEmployeeTable"  class="profileTable" style="margin-top:5px;"><tr>
@@ -17,12 +17,15 @@
 			<input id="email" type="text" name="email" placeholder = "employee email" required /></td>
 			<td>Phone :</td><td>
 
-			<input id="phone" type="text" name="phone" placeholder = "Phone Number" required /></td>
+			<input id="phone" type="text" name="phone" placeholder = "Phone Number" required 
+			 pattern="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$" title=" (555)-555-5555, 
+				555-555-5555 or +1-555-532-3455"/></td>
 			</tr>
 
 			<tr>
 			<td>Department :</td><td>
-			<select name="department">
+			<select name="department" required>
+			<option value=""> Select a Department! </option>
 			<?php 
 
 

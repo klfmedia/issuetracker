@@ -5,9 +5,15 @@
 	if($alert=="failure"){
 		echo' <script> swal("'.$alert_title.'", "'.$alert_message.'", "error"); </script>' ;
 	}
+	
 	else if($alert=="success"){
 			echo' <script> swal("'.$alert_title.'", "'.$alert_message.'", "success"); </script>' ;
-	}		
+	}
+	
+	else if($alert=="info"){
+		echo' <script> swal("'.$alert_title.'", "'.$alert_message.'", "info"); </script>' ;
+	}
+	
 	else if($alert=="reject"){
 			echo' <script>	swal({
 			title: "'.$alert_title.'",

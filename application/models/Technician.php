@@ -107,5 +107,15 @@ class Technician extends CI_Model{
 		$result=$info->row_array();
 		return $result["tech_name"];
 	}
+	
+	//get technician name from id
+	public function getTechnicianJobs()
+	{
+		$this->load->database();
+		$info = $this->db->query("SELECT issues.issue_name, issues.issue_id, location, date_assigned
+				FROM issues, issue_log WHERE issues.issue_id = issue_log.issue_id
+				AND technician_id =".$this->technician_id);
+		return $info->result_array();
+	}
 
 }
