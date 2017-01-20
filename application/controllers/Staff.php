@@ -3,8 +3,11 @@ class Staff extends CI_Controller {
 
 //calls header and footer for display as well as page to fill in new issue.
 	public function newIssue()
-	{
-		$this->staffData();
+	{	session_start();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'New Issue' => '#');
+		
+		$this->staffData($crumbs);
 		$this->load->model('Employee');
 		$staff=new Employee();
 		$all_locations = $staff->getLocations();
@@ -57,7 +60,7 @@ class Staff extends CI_Controller {
 				move_uploaded_file($file_tmp,"./assets/images/".$file_name);
 			}
 			else{$new_issue->uploadFile("issue.jpg");}
-			$this->staffDisplay();
+			//$this->staffDisplay($crumbs);
 			$this->issues();
 			$data["alert_title"]= "Issue Reported!";
 			$data["alert_message"]='Your Issue has been reported';
@@ -65,9 +68,10 @@ class Staff extends CI_Controller {
 			$this->load->view("alert",$data);
 		}
 		else {
+			$this->newIssue();
 			$data["alert_title"]= "Upload Failed!";
 			$data["alert_message"]=$errors[0];
-			$data["alert"]="upload";
+			$data["alert"]="failure";
 			$this->load->view("alert",$data);
 		}		
 	}
@@ -75,7 +79,11 @@ class Staff extends CI_Controller {
 //gets reported issues and displays all or those roported by user
 	public function issues()
 	{
-		$this->staffDisplay();
+		if(!isset($_SESSION)){
+			session_start();
+		}
+		
+		
 		$pge=1;
 		if (isset($_GET["page"])) {
 			$pge= $_GET["page"];
@@ -84,21 +92,26 @@ class Staff extends CI_Controller {
 		$sel_issues;
 		$this->load->model('Employee');
 		$staff = new Employee();
-		if(!isset($_SESSION)){
-			session_start();
-		}
+		
 		$staff->setEmployeeId($_SESSION['userid']);
 		if (isset($_GET["all"]) && $_GET["all"]=="true") {
 			$my_issues = $staff->getAllIssues();
 			$sel_issues=$staff->viewAllIssues($str);
 			$data['all'] = "true";
 			$data["search"]="all";
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+			'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+			'All' => 'http://localhost/issuetracker/index.php/supervisor/issues');
 		}
 		else {
 			$my_issues = $staff->getMyIssues();
 			$sel_issues=$staff->viewMyIssues($str);
 			$data["search"]="mine";
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+					'My Issues' => 'http://localhost/issuetracker/index.php/staff/issues?all=false');
 		}
+		$this->staffDisplay($crumbs);
 		$nbr=ceil(count($my_issues)/8);
 		$data['nb']=$nbr;
 		$data['page_number'] = $pge;
@@ -122,7 +135,7 @@ class Staff extends CI_Controller {
 		$current_issue = new Issue();
 		$current_issue->setIssueId($_GET['id']);
 		$issue_details = $current_issue->getIssueDetails();
-		$data = $this->greetings();
+		$data["greeting"] = $this->greetings();
 		$data['all'] = $_GET['all'];
 		$data['page_number'] = $_GET['page'];
 		$data['issue_id'] = $_GET['id'];
@@ -136,6 +149,9 @@ class Staff extends CI_Controller {
 			$boss->getFullProfile();
 			$data["name"] = $boss->getFirstName()." ".$boss->getLastName();
 			$data["photo"] = $boss->getPhoto();
+			$data['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+					'Issue Details' => '#');
 			$this->load->view("header",$data);
 			$this->load->model('Admin');
 			$boss= new Admin();
@@ -145,7 +161,10 @@ class Staff extends CI_Controller {
 			$this->load->view("issuedetailsadmin", $techs);
 		}
 		else {
-			$this->staffData();
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+					'Issue Details' => '#');
+			$this->staffData($crumbs);
 			$this->load->view("issuedetails", $data);
 		}
 		
@@ -171,6 +190,8 @@ class Staff extends CI_Controller {
  		$data['credentials'] = $my_profile; 	
  		$name= $current_user->getDepartment();
  		$data["department"] =$name["department_name"];
+ 		$data['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+ 				'Profile' => 'http://localhost/issuetracker/index.php/staff/myprofile');
 		$this->load->view("header",$data);
 		$this->load->view("profile",$data);
 		$this->load->view("footer"); 	
@@ -205,8 +226,8 @@ class Staff extends CI_Controller {
 		$current_user = new Employee();
 		$current_user->setEmployeeId($_SESSION['userid']);
 		$current_user->getFullProfile();
-		$current_user->setFirstName( $this->input->post('firstname'));
-		$current_user->setLastName( $this->input->post('lastname'));
+		$current_user->setFirstName($this->input->post('firstname'));
+		$current_user->setLastName($this->input->post('lastname'));
 		$current_user->setPhone( $this->input->post('phone'));
 		$current_user->setEmail( $this->input->post('email'));
 		if (!empty($_POST["newPass"])) {
@@ -222,9 +243,10 @@ class Staff extends CI_Controller {
 	
 	
 //loads basic data of current user including menu bar
-	public function staffData()
+	public function staffData($crumbs)
 	{
-		$data=$this->greetings();
+		$data=$crumbs;
+		$data["greeting"] = $this->greetings();
 		$this->load->model('Employee');
 		if(!isset($_SESSION)){
 			session_start();
@@ -244,9 +266,10 @@ class Staff extends CI_Controller {
 		$this->load->view("footer");
 	}
 //loads basic data of current user without menu bar
-	public function staffDisplay()
+	public function staffDisplay($crumbs)
 	{
-		$data=$this->greetings();
+		$data=$crumbs;
+		$data["greeting"] = $this->greetings();
 		$this->load->model('Employee');
 		if(!isset($_SESSION)){
 			session_start();
@@ -345,17 +368,23 @@ class Staff extends CI_Controller {
 		if ($hrs > 17) { $top_background = 'evening.jpg'; $msg = "Good evening";   }   // After 5pm
 		if ($hrs > 22) { $top_background = 'night2.jpg'; $msg = "Go to bed!";     }   // After 10pm
 	
-		$data["top_background"]=$top_background;
+		//$data["top_background"]=$top_background;
 		$data["greeting"]=$msg;
-		return $data;
+		return $msg;
 	} 
 //displays home page with information and random quote
 	public function home()
 	{
-		$this->staffData();
+		session_start();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] );
+		$this->staffData($crumbs);
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->randomQuote();
 		$this->load->view("quotes", $data);
+		
+		//crumbs
+		
+		
 	}
 	
 

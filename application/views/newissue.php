@@ -8,7 +8,8 @@
 
 				<tr><td>
 				Priority</td><td>
-				<select name = "priority">
+				<select name = "priority" required>
+					<option value = "">Select Issue Priority</option>
 					<option value = "low">Low</option>
 					<option value = "medium">Medium</option>
 					<option value = "high">High</option>
@@ -22,7 +23,8 @@
 
 				<tr><td>Location </td><td>
 				<select 
-					 id= "issueLocation" name="issueLocation" onchange = "specifyIfNewLocation()">
+					 id= "issueLocation" name="issueLocation" onchange = "specifyIfNewLocation()" required>
+					 <option value = "">Select Issue Location</option>
 				<?php 
 
 				foreach ($locations as $location){

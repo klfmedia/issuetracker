@@ -273,8 +273,29 @@ padding:0px 20px;
     color: white;
 }
 
+.breadcrumbs{
+	position:absolute;
+	top:90px;
+	left:55px;
+	padding:0;
+	margin:10px auto;
+	margin-bottom:30px;
+	height :30px;
+	width:95%;
+	z-index:3000;
 
-
+	
+}
+.breadcrumbs li{
+    display: inline;
+    color:blue;
+    /*text-align: center;*/
+    text-decoration: none;
+    text-transform: capitalize; 
+    font-size:14px;  
+    line-height: 1.250em;
+	padding:0 2px;
+}
 
 
 

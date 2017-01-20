@@ -83,7 +83,33 @@
 		   <img src="../../assets/images/logout.png?>"/>
 			<span class="popuptext" style="bottom:25%; left:25%"  id="signOut"> Log Out</span>
 		   </a>
-		</div>
+		</div>             
+            
+            
+            <div class="breadcrumbs" style="margin-left:5px;">
+                    <ul class="breadcrumb" style="float:left">
+                    <?php
+                    foreach ($breadcrumb as $key=>$value) {
+                     if($value!=''){
+                    ?>
+                        <li style="float:left;"><a href="<?php echo $value; ?>"><?php echo $key; ?></a> <span class="divider">></span></li>
+                        <?php }else{?>
+                        <li style="float:left;" class="active"><?php echo $key; ?></li>
+                        <?php }
+                    }
+                    ?>        
+                    </ul>
+                </div>
+         
+    
+		
+		
+		
+		
+		
+		
+		
+		
 		<!-- END NAVIGATION BAR --> 
 	   <!-- END HEADER SECTION -->
 	   

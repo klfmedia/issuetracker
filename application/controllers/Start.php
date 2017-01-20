@@ -33,10 +33,12 @@ class Start extends CI_Controller {
 			$_SESSION["user"] = $result->employee_type;
 			$_SESSION["views"]="listView";
 			$_SESSION["issues"]="all";
+			$_SESSION["home_url"]="http://localhost/issuetracker/index.php/staff/home";
 			$data['name'] = $result->first_name;
 			$data['photo'] = $result->photo;
 			$data['issues'] = $issues;
 			$data["login"] = "logged";
+			$data['breadcrumb'] = array('Home' => $_SESSION["home_url"] );
 			$this->load->view("header",$data);
 			if ($result->employee_type=="administration" || $result->employee_type=="boss") {
 				$this->load->view("admininfo",$data);
@@ -46,6 +48,8 @@ class Start extends CI_Controller {
 			}
 				
 			$data=$this->globalmethods->randomquote();
+			
+			//$this->load->view('welcome_message',$data);
 			$this->load->view("quotes",$data);
 			$this->load->view("footer");		
 		}

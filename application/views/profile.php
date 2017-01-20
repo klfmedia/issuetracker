@@ -27,7 +27,7 @@
 		<table class="profileTable" style="margin-top:1px;"><tr>
 			<td>First Name</td><td>
 			  <input class="myInfo"  id="myInfoFName"  type="text" readonly value="<?php echo ucfirst($credentials['first_name']);?>" />
-			 <input class="basicInfo" id="inputFName" style="background-color:#D8D8D8" type="text" name="firstname" value=" <?php echo ucfirst($credentials['first_name']);?>" required />
+			 <input class="basicInfo" id="inputFName" style="background-color:#D8D8D8" type="text" name="firstname" value="<?php echo ucfirst($credentials['first_name']);?>" required />
 			 <a id="editFName" onclick = "editFNameField()"  class="editField"  style="float:left;">
 			<img  src="../../assets/images/iconedit.png" /></a>
 			 

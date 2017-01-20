@@ -147,6 +147,7 @@ class Supervisor extends CI_Controller
 //create new technician without assigning task 
 	public function manageTech()
 	{
+		session_start();
 		$this->load->model('Technician');
 		$new_tech = new Technician();
 		$new_tech->setName($this->input->post('techname'));
@@ -178,7 +179,9 @@ class Supervisor extends CI_Controller
 		$all_techs = $this->Admin->getTechnicians();
 		$nbr=ceil(count($all_techs)/5);
 		$data["nb"] = $nbr;
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Technicians' => 'http://localhost/issuetracker/index.php/supervisor/technicians');
+		$this->adminData($crumbs);
 		$this->load->view("technicians", $data);
 		$this->load->view("alert",$data);
 	}
@@ -249,11 +252,15 @@ class Supervisor extends CI_Controller
 //redirect to page for new employee creation
 	public function newEmployee()
 	{
+		session_start();
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$all_departments = $boss->getAllDepartments();
 		$data["departments"] = $all_departments;
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Employees' => 'http://localhost/issuetracker/index.php/supervisor/employees',
+				'Add Employee' => 'http://localhost/issuetracker/index.php/supervisor/newemployee');
+		$this->adminData($crumbs);
 		$this->load->view("newemployee",$data);
 	}
 	
@@ -283,6 +290,7 @@ class Supervisor extends CI_Controller
 //Modify technician details	
 	public function modifyTech()
 	{
+		session_start();
 		$pge=1;
 		if (isset($_GET["page"])) {
 			$pge= $_GET["page"];
@@ -298,13 +306,17 @@ class Supervisor extends CI_Controller
 		//$all_techs = $this->Admin->getTechnicians();
 		$nbr=ceil(count($view_techs)/5);
 		$data["nb"] = $nbr;
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Technicians' => 'http://localhost/issuetracker/index.php/supervisor/technicians',
+				'Update' => '#');
+		$this->adminData($crumbs);
 		$this->load->view("technicians", $data);	
 	}
 	
 	//Modify technician details
 	public function techJobs()
 	{
+		session_start();
 		$pge=1;
 		if (isset($_GET["page"])) {
 			$pge= $_GET["page"];
@@ -323,7 +335,10 @@ class Supervisor extends CI_Controller
 		$jobs = $current_tech->getTechnicianJobs();
 		$nbr=ceil(count($view_techs)/5);
 		$data["nb"] = $nbr;
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Technicians' => 'http://localhost/issuetracker/index.php/supervisor/technicians',
+				'Tasks' => '#');
+		$this->adminData($crumbs);
 		$tech_name = $current_tech->getTechnicianName($tech_id);
 		$data["tech_name"] = $tech_name;
 		$data["page_number"] = $pge;
@@ -350,17 +365,18 @@ class Supervisor extends CI_Controller
 	}
 	
 //loads profile data for current administration	
-	public function adminData()
+	public function adminData($crumbs)
 	{	
 		if(!isset($_SESSION)) {
 			session_start();
 		}
+		$data=$crumbs;
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$boss->setEmployeeId($_SESSION["userid"]);
 		$boss->getFullProfile();
 		$this->load->library("globalmethods");
-		$data=$this->globalmethods->greetings();
+		$data["greeting"]=$this->globalmethods->greetings();
 		$data["name"] = $boss->getFirstName()." ".$boss->getLastName();
 		$data["photo"] = $boss->getPhoto();
 		$this->load->view("header",$data);
@@ -373,8 +389,13 @@ class Supervisor extends CI_Controller
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$this->load->library("globalmethods");
-		$this->adminData();
-		$this->load->view("header");	
+		
+		//crumbs
+		session_start();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues');
+		$this->adminData($crumbs);
+		//$this->load->view("header");	
 		$data=$this->getDisplayData("issues");
 		$data["all"]="true";
 		$data["search"]="all";
@@ -385,11 +406,14 @@ class Supervisor extends CI_Controller
 //displays tables for technicians
 	public function technicians()
 	{
+		session_start();
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->greetings();
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Technicians' => 'http://localhost/issuetracker/index.php/supervisor/technicians',);
+		$this->adminData($crumbs);
 		$data=$this->getDisplayData("technicians");
 		$data["tech_tasks"]="hide";
 		$this->load->view("technicians", $data);
@@ -397,11 +421,16 @@ class Supervisor extends CI_Controller
 	
 //display tables for employees
 	public function employees(){
+		session_start();
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$this->load->library("globalmethods");
-		$data=$this->globalmethods->greetings();
-		$this->adminData();	
+		$data["greeting"]=$this->globalmethods->greetings();
+		
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Employees' => 'http://localhost/issuetracker/index.php/supervisor/employees');
+		
+		$this->adminData($crumbs);	
 		//$data["page_number"]=$_GET["page"];
 		$data=$this->getDisplayData("employees");
 		$this->load->view("employees", $data);	
@@ -410,11 +439,14 @@ class Supervisor extends CI_Controller
 //displays tables for administrators
 	public function administrators()
 	{
+		session_start();
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->greetings();
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Administrators' => 'http://localhost/issuetracker/index.php/supervisor/administrators');
+		$this->adminData($crumbs);
 		$data=$this->getDisplayData("administration");
 		$this->load->view("administrators", $data);
 	}
@@ -422,11 +454,14 @@ class Supervisor extends CI_Controller
 //displays tables for inactive employees
 	public function inactiveStaff()
 	{
+		session_start();
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->greetings();
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Inactive Staff' => '#'	);
+		$this->adminData($crumbs);
 		$data=$this->getDisplayData("inactive");
 		$this->load->view("inactiveemployees", $data);
 	}
@@ -486,7 +521,10 @@ class Supervisor extends CI_Controller
 //prompt to delete outdated issues
 	public function expiredIssues()
 	{
-		$this->adminData();
+		session_start();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Outdated Issues' => 'http://localhost/issuetracker/index.php/supervisor/outdatedissues');
+		$this->adminData($crumbs);
 		$this->load->view("admininfo");
 		$this->load->library("globalmethods");
 		$data=$this->globalmethods->randomQuote();
@@ -497,7 +535,7 @@ class Supervisor extends CI_Controller
 		$this->load->view("alert",$data);
 	}
 
-//delete outdated issues after confirmation
+/* //delete outdated issues after confirmation
 	public function deleteOldIssues()
 	{
 		$this->load->model('Issue');
@@ -507,7 +545,7 @@ class Supervisor extends CI_Controller
 		$data["alert_message"]='Employee has been reactivated ';
 		$data["alert"]="success";
 		$data["alert_title"]="Employee DReactivated";
-	}
+	} */
 	
 //prompt to confirm delete of inactiver profile
 	public function deleteStaff()
@@ -676,16 +714,29 @@ class Supervisor extends CI_Controller
 			$data['credentials'] = $my_profile;
 			$name= $current_user->getDepartment();
 			$data["department"] =$name["department_name"];
+			$data['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Profile' => '#');
 			$this->load->view("header",$data);
 			$this->load->view("profile",$data);
 			$this->load->view("footer");
 		}
 		else{
-			$this->adminData();
+						
 			$this->load->model("Employee");
 			$staff = new Employee();
 			$staff->setEmployeeId($_GET["id"]);
 			$staff->getFullProfile();
+			if ($staff->getType()=="administration" || $staff->getType()=="boss"  ){
+				$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+						'Administrators' => 'http://localhost/issuetracker/index.php/supervisor/employees',
+						'Administrator Details' => '#');
+			}
+			else{
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Employees' => 'http://localhost/issuetracker/index.php/supervisor/employees',
+					'Employee Details' => '#');
+			}
+			$this->adminData($crumbs);
 			$staff_info = $staff->getRowProfile();
 			$my_dept=  $staff->getDepartment();
 			$data["department"] = $my_dept["department_name"];
@@ -698,6 +749,7 @@ class Supervisor extends CI_Controller
 //controls staff profile for administration view
 	public function manageEmployee()
 	{
+		session_start();
 		$this->load->model('Employee');
 		$staff= new Employee();
 		$staff->setEmployeeId($this->input->post('staffId'));
@@ -714,7 +766,10 @@ class Supervisor extends CI_Controller
 		$data["department"] = $my_dept["department_name"];
 		$data["staffinfo"] = $staff_info;
 		$data["departments"]=$staff->getAllDepartments();
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Employees' => 'http://localhost/issuetracker/index.php/supervisor/employees',
+				'Employee Details' => '#');
+		$this->adminData($crumbs);
 		$this->load->view("profileview",$data);
 		$data["alert_title"]="Profile Updated!";
 		$data["alert_message"]= ucwords($name).'\'s profile has been updated.';
@@ -741,7 +796,7 @@ class Supervisor extends CI_Controller
 		$data['details'] = $issue_details;
 		$data['issueImage'] = $current_issue->getIssueAttachments();
 		$staff = $current_user->getType();
-		$this->adminData();
+		$this->adminData($crumbs);
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$my_techs = $boss->getTechnicians();
@@ -753,8 +808,13 @@ class Supervisor extends CI_Controller
 	//search issues by priority.
 	public function search()
 	{
+		session_start();
 		$searchValue=$_GET["search"];
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues');
+		
+	
+	
 		$pge=1;
 		if (isset($_GET["page"])) {
 			$pge= $_GET["page"];
@@ -770,25 +830,36 @@ class Supervisor extends CI_Controller
 			$sel_issues=$an_issue->viewIssuesByStatus($str);
 			$data['all'] = "true";
 			$_SESSION["issues"]="assigned";
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+			'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+			'Assigned' => 'http://localhost/issuetracker/index.php/supervisor/issues?search=assigned');
 		}	
 		else if ($searchValue=="open") {
 			$my_issues = $an_issue->getOpenIssues();
 			$sel_issues=$an_issue->viewOpenIssues($str);
 			$data['all'] = "true";
 			$_SESSION["issues"]="open";
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+					'Open' => 'http://localhost/issuetracker/index.php/supervisor/issues?search=open');
 		}
 		else if ($searchValue=="closed") {
 			$my_issues = $an_issue->getClosedIssues();
 			$sel_issues=$an_issue->viewClosedIssues($str);
 			$data['all'] = "true";
 			$_SESSION["issues"]="closed";
+			$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+					'Issues' => 'http://localhost/issuetracker/index.php/supervisor/issues',
+					'Closed' => 'http://localhost/issuetracker/index.php/supervisor/issues?search=closed');
 		}
 		else if ($searchValue=="all") {
 			$my_issues = $an_issue->getClosedIssues();
 			$sel_issues=$an_issue->viewClosedIssues($str);
 			$data['all'] = "true";
 			$_SESSION["issues"]="closed";
+			
 		}
+		$this->adminData($crumbs);
 		$nbr=ceil(count($my_issues)/8);
 		$data["search"]=$searchValue;
 		$data['nb']=$nbr;
@@ -814,8 +885,8 @@ class Supervisor extends CI_Controller
 	{
 		$this->load->model('Admin');
 		$boss= new Admin();
-		$issue_count = $boss->deleteOutdatedIssues();
-		$data["alert_message"]= $issue_count.' Outdated Issues have been deleted permanently from the system ';
+		$boss->deleteOutdatedIssues();
+		$data["alert_message"]='Outdated Issues have been deleted permanently from the system ';
 		$data["alert"]="success";
 		$data["alert_title"]="Outdated Issues Deleted";
 		$this->outdatedIssues();
@@ -831,8 +902,11 @@ class Supervisor extends CI_Controller
 		$str = ($pge*5)-5;
 		$this->load->model('Admin');
 		$boss= new Admin();
-		$this->adminData();
-		$this->load->view("header");
+		session_start();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Outdated Issues' => 'http://localhost/issuetracker/index.php/supervisor/outdatedissues');
+		$this->adminData($crumbs);
+		//$this->load->view("header");
 		$old_issues=$boss->getOutdatedIssues();
 		$nbr=ceil(count($old_issues)/8);
 		$view_issues=$boss->viewOutdatedIssues($str);
@@ -860,7 +934,10 @@ class Supervisor extends CI_Controller
 		$data['details'] = $issue_details;
 		$data['issueImage'] = $current_issue->getIssueAttachments();
 		$staff = $current_user->getType();
-		$this->adminData();
+		$crumbs['breadcrumb'] = array('Home' => $_SESSION["home_url"] ,
+				'Outdated Issues' => 'http://localhost/issuetracker/index.php/supervisor/outdatedissues',
+				 'Outdated-Issues Details' => '#');
+		$this->adminData($crumbs);
 		$this->load->model('Admin');
 		$boss= new Admin();
 		$my_techs = $boss->getTechnicians();
